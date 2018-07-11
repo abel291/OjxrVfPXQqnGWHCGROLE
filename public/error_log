@@ -1,0 +1,6 @@
+[10-Jul-2018 16:08:50 UTC] PHP Fatal error:  Call to a member function where() on null in /home/weeffectpodeeir/public_html/rrhh/app/Http/Controllers/PlanillaController.php on line 139
+[10-Jul-2018 16:08:57 UTC] PHP Fatal error:  Call to a member function where() on null in /home/weeffectpodeeir/public_html/rrhh/app/Http/Controllers/PlanillaController.php on line 139
+[10-Jul-2018 16:09:25 UTC] PHP Fatal error:  Call to a member function where() on null in /home/weeffectpodeeir/public_html/rrhh/app/Http/Controllers/PlanillaController.php on line 139
+[10-Jul-2018 16:09:38 UTC] PHP Fatal error:  Call to a member function where() on null in /home/weeffectpodeeir/public_html/rrhh/app/Http/Controllers/PlanillaController.php on line 139
+[11-Jul-2018 02:26:01 UTC] PHP Fatal error:  Call to a member function where() on null in /home/weeffectpodeeir/public_html/rrhh/app/Http/Controllers/PlanillaController.php on line 139
+[11-Jul-2018 03:03:23 UTC] PHP Fatal error:  Call to a member function where() on null in /home/weeffectpodeeir/public_html/rrhh/app/Http/Controllers/PlanillaController.php on line 139
