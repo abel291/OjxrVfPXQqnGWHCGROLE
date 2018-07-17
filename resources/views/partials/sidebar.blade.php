@@ -8,7 +8,8 @@
             <li class="sidebar-avatar">
                 <div class="dropdown nav-header">                    
                     <div class="name"><strong>{{auth()->user()->first_name}} {{auth()->user()->last_name}}</strong></div>
-                    <span class="text-muted text-xs block">{{auth()->user()->email}} </span> </a>
+                    <span class="text-muted text-xs block">{{auth()->user()->email}} </span> <br>
+                    <span class="text-muted text-xs block">{{auth()->user()->roles->first()->name}} </span> 
                 </div>
             </li>
            

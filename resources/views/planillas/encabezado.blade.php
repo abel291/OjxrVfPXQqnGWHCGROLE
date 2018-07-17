@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-default encabezado_form">
 		<div class="panel-heading" ><b>Encabezado</b></div>
 		<div class="panel-body">
 
@@ -29,7 +29,7 @@
 							value="{{$administradora->first_name}} {{$administradora->last_name}}">
 						</div>
 					</div>
-					@if(Entrust::hasRole('Administradora') || Entrust::hasRole('Coordinadora') && auth()->user()->oficina_id==1)
+					@if(Entrust::hasRole('Administradora') || (Entrust::hasRole('Coordinadora') && auth()->user()->oficina_id==1))
 					<div class="form-group">
 						<label class="col-sm-4 control-label">Planilla Confirmada:</label>
 						<div class="col-sm-8" >

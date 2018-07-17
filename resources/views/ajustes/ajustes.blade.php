@@ -629,7 +629,7 @@ $(document).on('submit', '.form_email', function(event) {
     
     $.ajax({
       url: '{{url("/email_prueba")}}',
-      
+      type:'POST',  
       dataType: 'json',
       data: {email: email},
     })

@@ -743,19 +743,11 @@ Route::delete('adenda/delete/{id}', [
 
 //email
 use Illuminate\Support\Facades\Mail;
-/*Route::get('/correo',function()
-{
-    $data=[];
-    Mail::send('emails.aprobada', $data, function ($message) {
-            $message->from('abel291m@gmail.com', 'Laravel');
-            $message->to('abel291m@gmail.com')->cc('bar@example.com');
-    });    
-   
-});*/
-Route::get('/email_prueba',function()
+
+Route::post('/email_prueba',function()
 {
     //sleep(5);
-    $email=$_GET['email'];
+    $email=$_POST['email'];
 
     $data=[];
     Mail::send('emails.prueba', $data, function ($message) use ($email) {
@@ -763,7 +755,7 @@ Route::get('/email_prueba',function()
             $message->subject('Email Prueba');
             $message->to($email);
     }); 
-    echo json_encode('Correo enviado ');
+    echo json_encode('Correoo enviado ');
    
 });
 ////RECEPCIONES

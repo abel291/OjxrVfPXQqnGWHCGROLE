@@ -152,7 +152,7 @@
 			        </tr>
 			        
 			        <tr class="aportes{{$user->id}}">				        
-				        @if(str_contains($fecha, 'Junio')  && ($pais->id==1 || $pais->id==4))
+				        @if( $pais->id==1 || $pais->id==4)
 
 				        	<td align="middle" valign="middle" ><b>APORTES</b> </td>				        
 					    	@if (str_contains($fecha, 'Junio')  ) 					           	
@@ -662,18 +662,10 @@
 		     	 	
 		    
 		
-		<div class=" text-right"  style="margin-top: 15px;">
-		    @role(['Administradora','Coordinadora'])
-		    	@if(
-		    		Entrust::hasRole('Administradora') || 
-		    		(Entrust::hasRole('Coordinadora') && $edit && !$planilla->confirmada) ||
-		    		(Entrust::hasRole('Coordinadora') && !$edit && $oficina->id==1 )
-		    		)	    	 		
-		    	<button type="submit" class="btn btn_color guardar">
-		    		{{$edit ? 'Guardar Cambios' : 'Crear Planilla'}}
-		    	</button>
-		    	@endif
-		   	@endrole	   	    	
+		<div class=" text-right"  style="margin-top: 15px;">		       	 		
+		    <button type="submit" class="btn btn_color guardar">
+		    	{{$edit ? 'Guardar Cambios' : 'Crear Planilla'}}
+		    </button>		 	   	    	
 	   	</div> 	
     </form>
 
@@ -707,6 +699,28 @@
 	@role(['Directora','Contralora','Admin'])	    	
     	$('.planilla_form input').attr('disabled', true); 
 	@endrole
+
+	@role(['Administradora','Coordinadora'])
+	@if(
+		(Entrust::hasRole('Administradora') && !$edit) || 
+		(Entrust::hasRole('Administradora') && $edit  && !$planilla->confirmada) ||
+		(Entrust::hasRole('Coordinadora') && $edit  && !$planilla->confirmada) ||		
+		(Entrust::hasRole('Coordinadora') && !$edit && $oficina->id==1 )
+		)	    	 		
+		$('.planilla_form .tab-content input').attr('disabled', false); 		
+	@else
+		$('.planilla_form  input,.planilla_form select').attr('disabled', true);
+		$('button.guardar,.calculo_acumulados,.calculo_salario_todos,.calculo_aguinaldo_todos,.calculo_indemnizacion_todos,.calculo_pension_todos').remove(); 
+		
+	@endif
+	@endrole
+
+	@if (Entrust::hasRole('Coordinadora') && $edit && $oficina->id!==1)
+		console.log("d")
+		$('.encabezado_form select[name="confirmada"],.encabezado_form input[name="cambio"]').attr('disabled', true);
+	@endif
+
+
 //////////////////////////////////////////////////////////////////////////////////
 	//calculo acumulado aguinaldo
 	$(document).on('click ', '.calculo_acumulados', function(event) {

@@ -71,7 +71,7 @@
 								{{$planilla->administradora->last_name}}								
 						</label><br>-->
 						@if($planilla->confirmada)						
-							<span style="font-size:90%;font-weight:normal;" class="label label-success "><i class="fa fa-check"></i> Revisada</span>		
+							<span style="font-size:90%;font-weight:normal;" class="label label-success "><i class="fa fa-check-circle"></i> Revisada</span>		
 						@else								
 							<span style="font-size:90%;font-weight:normal;" class="label label-warning ">En revisión</span>
 						@endif
@@ -101,16 +101,23 @@
 
 					</td>
 					<td>
-							@role(['Directora','Coordinadora','Contralora','Admin'])					
+							@role(['Directora','Coordinadora','Contralora','Admin','Administradora'])					
 								<a href='{{url("/edit/planilla/$planilla->id")}}' class="btn btn_color btn_azul  "> Ver</a>
-							@endrole			
+							@endrole							 	
+
 							@role(['Administradora','Coordinadora'])
-							<a href='{{url("/edit/planilla/$planilla->id")}}' class="btn btn_color btn_azul"
-								title="Editar PLanilla {{$planilla->m_a}}"
-		                        data-toggle="tooltip"
-		                        data-placement="top">
-							 	<i class="glyphicon glyphicon-pencil fa-fw"></i>
-							</a>
+								@if(!$planilla->confirmada || (Entrust::hasRole('Coordinadora') && !$planilla->aprobacion_coordinadora)
+							    	
+							    )	    	 		
+							    	
+							    	
+								<a href='{{url("/edit/planilla/$planilla->id")}}' class="btn btn_color btn_azul"
+									title="Editar PLanilla {{$planilla->m_a}}"
+			                        data-toggle="tooltip"
+			                        data-placement="top">
+								 	<i class="glyphicon glyphicon-pencil fa-fw"></i>
+								</a>
+								@endif
 							@endrole
 
 							@if(Entrust::hasRole('Administradora') || Entrust::hasRole('Admin') || Entrust::hasRole('Coordinadora') && $planilla->oficina_id==1)

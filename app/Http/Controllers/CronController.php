@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Mail;
 class CronController extends Controller
 {
     public function contrato_email()
-    { dd(uniqid());
+    { 
       $coord = User::select('first_name', 'email')->withRole('Coordinadora')->get();
       $contratos = Contrato::where('status',1)->get();//contratos aprobados
        
@@ -24,6 +24,8 @@ class CronController extends Controller
                'contrato' => $contrato,
                'user' => $user                
             );
+
+
           	//Contratos que finalizan hoy y tiene un status = 1 que son los aprobados    
           	if ($contrato->fecha_fin == date('Y-m-d')) {
 
@@ -32,7 +34,7 @@ class CronController extends Controller
             		$contrato->save();
             	}           
             	//return view('emails.contratos.vence_contrato',$data);
-	            Mail::send('emails.contratos.vence_contrato', $data, function ($message) use ($user)
+	            Mail::send('emails.contratos.vence_contrato', $data, function ($message) use ($user,$coord)
 	            {
 	              $message->from('notificacion@weeffect-podeeir.org', "WE EFFECT");
 	              $message->subject('Aviso de vencimiento de contrato de ');
@@ -42,7 +44,7 @@ class CronController extends Controller
           	}
           	elseif (date('Y-m', strtotime($contrato->fecha_fin)) == date('Y-m') && date("d", strtotime($contrato->fecha_fin)) - date('d') == 5 ) {
           		//return view('emails.contratos.falta_cinco',$data);
-	            Mail::send('emails.contratos.falta_cinco', $data, function ($message) use ($user)
+	            Mail::send('emails.contratos.falta_cinco', $data, function ($message) use ($user,$coord)
 	            {
 	              $message->from('notificacion@weeffect-podeeir.org', "WE EFFECT");
 	              $message->subject('Faltan 5 dias para que expire el contrato');
