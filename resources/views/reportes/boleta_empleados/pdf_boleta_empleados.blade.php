@@ -7,14 +7,13 @@
 			
 			<div style="display: inline-block; width: 47%;font-size: 12px;" >
 				<b>Organizacion: </b>WE EFFECT<br>
-				<b>Domicilio: </b> {{$planilla->oficina->direccion}} <br>
-				<b>N.I.T: </b> {{$planilla->oficina->nit}} <br>
+				<b>Domicilio: </b> {{$planilla->oficina->direccion}} <br>				
 				<b>Codigo Patronal: </b> {{$planilla->oficina->num_patronal}} 	
 			</div>
 
 			<div style="display: inline-block; width: 47%;font-size: 12px;" >
 				<b>Nombre: </b>{{$empleado->user->first_name}} {{$empleado->user->last_name}}<br>
-				<b>N.I.T: </b><br>
+				<b>N.I.T: </b> {{$empleado->user->n_identificacion_tributaria}} <br>
 				<b>Afiliacion al Seguro Social: </b>{{$empleado->user->n_afiliacion}}<br>
 				<b>Cargo: </b>{{$empleado->user->cargo->cargo}}	
 			</div>	
@@ -102,7 +101,7 @@
 
 				@elseif($empleado->user->oficina->pais->id==6)<!--//SALVADOR-->					
 					<tr>
-						<td>AFP (6.25%)</td>
+						<td>AFP ({{env('SALVADOR_AFP')}}%)</td>
 						<td align="right">{{number_format($empleado->deduccion->afp,2)}}</td>	
 
 					</tr>

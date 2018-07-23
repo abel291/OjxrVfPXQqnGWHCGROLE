@@ -101,7 +101,7 @@ class ReportesController extends Controller
     {
        
         $datos=explode(',', $request->user);//0->user_id   1->oficina_id
-      
+        
         $m_a=$request->mes.'-'.$request->año;
         $planilla=planilla::where('m_a',"$m_a")->where('oficina_id',$datos[1])->first();
         //dd($planilla);
@@ -113,8 +113,9 @@ class ReportesController extends Controller
         if ($datos[0]=='todos') {
             $empleados=$planilla->empleados;           
         }else{
-            $empleados=$planilla->empleados->where('user_id',$datos[0]);
+            $empleados=$planilla->empleados->where('user_id',(integer)$datos[0]);
         }
+        
         //dd($empleado);        
         
         $dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");

@@ -152,7 +152,7 @@
 			        </tr>
 			        
 			        <tr class="aportes{{$user->id}}">				        
-				        @if( $pais->id==1 || $pais->id==4)
+				        @if( $pais->id==1 || (str_contains($fecha, 'Junio') && $pais->id==4 ) )
 
 				        	<td align="middle" valign="middle" ><b>APORTES</b> </td>				        
 					    	@if (str_contains($fecha, 'Junio')  ) 					           	
@@ -408,7 +408,7 @@
 
 			           	@if($pais->id==6)
 					        <td>
-					           	<label>AFP</label>
+					           	<label>AFP {{env('SALVADOR_AFP')}} % </label>
 					           	<input type="number" step="0.01" class="form-control" name="planilla[{{$user->id}}][afp]" 
 					           	@if($edit) 
 					           		value="{{$user->deduccion->afp}}"
@@ -620,7 +620,7 @@
 			           		
 			           		@if($edit) value="{{$user->deduccion->total_deducciones}}" @endif>
 			           	</td>
-			           	@if(str_contains($fecha, 'Junio') || $pais->id==1)
+			           	@if($pais->id==1 || (str_contains($fecha, 'Junio') && $pais->id==4 ))
 			           	<td>
 			           		<label>TOTAL APORTES</label>
 			           		<input type="number" readonly step="0.01" class="form-control" id="total_aportes{{$user->id}}" name="planilla[{{$user->id}}][total_aportes]" 

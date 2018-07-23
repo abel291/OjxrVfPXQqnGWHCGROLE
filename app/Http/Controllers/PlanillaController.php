@@ -192,7 +192,7 @@ class PlanillaController extends Controller
                     break;
                 case 6:
                     //deduccion
-                    $user->afp=round($user->salario_base*0.0625,2);
+                    $user->afp=round($user->salario_base*(env('SALVADOR_AFP')/100),2);
                     break;
 
             }  
@@ -304,7 +304,6 @@ class PlanillaController extends Controller
 
             $aporte->total_aportes=array_key_exists('total_aportes', $empleado)?  $empleado['total_aportes']: 0;
 
-
             $aporte->total_carga_patronal=0;
             $aporte->total_carga_patronal+=$aporte->seguridad_social_patronal;               
             switch ($requests->pais_id) {
@@ -378,18 +377,19 @@ class PlanillaController extends Controller
                     $deducciones->rc_iva=$empleado['rc_iva'] ;
                     break;
                 
-                case 6://DEDUCCIONES DE SALVADOR
-                    $deducciones->afp=$empleado['afp'];
-                    break;
-                case 4://DEDUCCIONES DE HONDURAS
-                    $deducciones->rap=$empleado['rap'];
-                    $deducciones->seguro_medico=$empleado['seguro_medico'];
-                    break;
                 case 3://DEDUCCIONES DE NICARAGUA                    
                     $deducciones->deduccion_1=$empleado['deduccion_1'];
                     $deducciones->deduccion_2=$empleado['deduccion_2'];
                     break;
+                    
+                case 4://DEDUCCIONES DE HONDURAS
+                    $deducciones->rap=$empleado['rap'];
+                    $deducciones->seguro_medico=$empleado['seguro_medico'];
+                    break;
                 
+                 case 6://DEDUCCIONES DE SALVADOR
+                    $deducciones->afp=$empleado['afp'];
+                    break;
                 default:
                     # code...
                     break;

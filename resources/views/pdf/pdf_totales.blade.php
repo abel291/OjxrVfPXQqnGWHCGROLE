@@ -46,7 +46,7 @@
 
 
 				@elseif($pais->id==6)<!--//SALVADOR-->					
-				<td >AFP (6.25%)</td>
+				<td>AFP ({{env('SALVADOR_AFP')}}%)</td>
 				@endif
 
 				@if( in_array('seguridad_social', explode(',', $planilla->campo_deducciones)) )
