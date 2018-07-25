@@ -8,12 +8,13 @@
 			<div style="display: inline-block; width: 47%;font-size: 12px;" >
 				<b>Organizacion: </b>WE EFFECT<br>
 				<b>Domicilio: </b> {{$planilla->oficina->direccion}} <br>				
+				<b>Identif. Tributaria: </b> {{$planilla->oficina->nit}} <br>				
 				<b>Codigo Patronal: </b> {{$planilla->oficina->num_patronal}} 	
 			</div>
 
 			<div style="display: inline-block; width: 47%;font-size: 12px;" >
 				<b>Nombre: </b>{{$empleado->user->first_name}} {{$empleado->user->last_name}}<br>
-				<b>N.I.T: </b> {{$empleado->user->n_identificacion_tributaria}} <br>
+				<b>Identif. Tributaria: </b> {{$empleado->user->n_identificacion_tributaria}} <br>
 				<b>Afiliacion al Seguro Social: </b>{{$empleado->user->n_afiliacion}}<br>
 				<b>Cargo: </b>{{$empleado->user->cargo->cargo}}	
 			</div>	
