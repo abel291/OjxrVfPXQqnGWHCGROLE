@@ -570,6 +570,12 @@ Route::get('aprobacion/permiso/{id}', [
 
 ]);
 
+Route::get('send/{id}/mail', [
+    'as' => 'permiso.reenvio',
+    'uses' => 'PermisosAusenciasController@reenvio',
+    'middleware' => 'role:Administradora|Coordinadora'
+]);
+
 
 //VACACIONES
 Route::get('vacaciones', [
@@ -751,7 +757,7 @@ Route::post('/email_prueba',function()
 
     $data=[];
     Mail::send('emails.prueba', $data, function ($message) use ($email) {
-            $message->from('notificacion@weeffect-podeeir.org', "WE EFFECT");
+            //$message->from('notificacion@weeffect-podeeir.org', "WE EFFECT");
             $message->subject('Email Prueba');
             $message->to($email);
     }); 

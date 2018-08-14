@@ -87,6 +87,15 @@
                     @endif
 
                     </a>
+
+                    @if( 
+                        Entrust::hasRole( ['Administradora','Coordinadora']) &&
+                        $permiso->aprobacion_coordinadora!=0
+                    )
+                    <a href="{{url('/send/'.$permiso->id.'/mail/')}}" class="btn btn_color send-email">
+                        <i class="glyphicon glyphicon-envelope"></i>
+                    </a>
+                    @endif
                     @if(
                     (   
                         Entrust::hasRole(['Directora','Contralora']) && auth()->user()->id==$permiso->user->id ||
@@ -114,6 +123,40 @@
     @section('scripts')
 
     <script>
+
+
+                $('.send-email').click(function(event) {
+                    event.preventDefault();
+                    self=$(this);
+                    swal({
+                      title: "Reenvio de Correo",
+                      text: "Se reenviara el correo de notificacion ",
+                      type: "info",
+                      showCancelButton: true,
+                      closeOnConfirm: false,
+                      showLoaderOnConfirm: true
+                    }, function () {
+                      
+                        $.ajax({
+                            url: self.attr('href'),
+                            type: 'get',
+                            dataType: 'json',
+                        })
+                        .done(function(data) {
+                             swal(data.msj);
+                        })
+                        .fail(function() {
+                             swal('Al parecer hubo un error');
+                        })
+                        .always(function(data) {
+                           
+                        });
+                        
+
+
+                      
+                    });
+                });
 
 
                 /*$('.descargar_planilla').click(function(event) {

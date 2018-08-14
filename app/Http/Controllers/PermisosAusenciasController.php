@@ -90,7 +90,7 @@ class PermisosAusenciasController extends Controller
         $motivo_permiso=Motivo_permiso::get();
         $edit=true;
         $aprobacion_coordinadora=$permiso->aprobacion_coordinadora;
-        return view('permisos.create',compact('permiso','edit','user','motivo_permiso','aprobacion_coordinadora')); 
+        return view('permisos.create',compact('permiso','edit','user','motivo_permiso','aprobacion_coordinadora'));
 
     }
     public function delete($id)
@@ -139,7 +139,8 @@ class PermisosAusenciasController extends Controller
         Mail::send('emails.aprobacion.vacaciones_permiso', $data, function ($message) use($user) {
             $message->from('notificacion@weeffect-podeeir.org', "WE EFFECT");
             $message->subject('Solicitud de Permiso');
-             $message->to($user->email,"$user->first_name $user->last_name");
+            $message->to($user->email,"$user->first_name $user->last_name");
+            $message->bcc( auth()->user()->email );
         });   
         
         $permiso->save();        
@@ -157,6 +158,46 @@ class PermisosAusenciasController extends Controller
         } 
        
     
+    }
+
+    public function reenvio($id)
+    {
+        $permiso=Permiso::find($id);
+        $user = $permiso->user;    
+        $status="...";
+        if ($permiso->aprobacion_coordinadora==1) {
+            $status="<label style='color: green;'><b>Su solicitud de permiso ha sido aprobada con exito </b></label>";   
+        }elseif ($permiso->aprobacion_coordinadora==2) {
+           $status="<label style='color: red;'><b>Su solicitud de permiso ha sido rechazada</b></label>";
+        } 
+
+        $data = array(                
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'contrato' => $user->n_contrato,
+            'cargo' => $user->cargo->cargo,
+            'oficina' => $user->oficina->oficina,
+            'tipo_permiso' => $permiso->tipo,
+            'motivo' => $permiso->motivo,
+            'fecha_inicio' => $permiso->fecha_inicio,
+            'fecha_fin' => $permiso->fecha_fin,
+            'num_dh' => $permiso->num_dh,
+            'dh' => $permiso->dh,
+            'tipo' => 'permiso',
+            'status' => $status
+        );        
+
+        //return view('emails.aprobacion.vacaciones_permiso',$data);
+        Mail::send('emails.aprobacion.vacaciones_permiso', $data, function ($message) use($user) {
+            //$message->from('notificacion@weeffect-podeeir.org', "WE EFFECT");
+            $message->subject("Solicitud de Permiso $user->first_name $user->last_name");
+            $message->to($user->email,"$user->first_name $user->last_name");
+            $message->bcc( auth()->user()->email );
+        }); 
+
+        return json_encode([
+            'msj'=>'Correo enviado'
+        ]);
     }
 
 }
